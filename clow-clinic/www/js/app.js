@@ -24,8 +24,10 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
 })
 
 .controller('AppCtrl', function($scope, $cordovaCamera, $ionicPlatform, $http, $firebase) {
-  var firebaseRef = new Firebase("https://clow.firebaseio.com/");
+  var firebaseRef = new Firebase("https://clow.firebaseio.com");
+  $scope.code = Math.floor(Math.random() * 10000);
   $scope.showForm = true;
+  $scope.showCode = false;
 
   $scope.submitForm = function(firstName, lastName) {
     $ionicPlatform.ready(function() {
@@ -35,7 +37,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
       };
 
       $cordovaCamera.getPicture(options).then(function(imageURI) {
-        console.log(imageURI);
         var options = {
           "method": "POST",
           "url": "https://api.imgur.com/3/image",
@@ -49,6 +50,35 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
           console.log(res);
           var imgLink = res.data.data.link;
           console.log(imgLink);
+
+          var config = {
+            "method": "POST",
+            "url": "https://api.projectoxford.ai/emotion/v1.0/recognize",
+            "headers": {
+              "Ocp-Apim-Subscription-Key": "7af2742a55ff4cc7bdc90afd9804bf14",
+              "Content-Type": "application/json"
+            },
+            "data": { "url": imgLink }
+          };
+
+          $http(config).then(function(res) {
+            $scope.showForm = false;
+            $scope.firstName = firstName;
+            $scope.lastName = lastName;
+            console.log(res);
+            var userRef = firebaseRef.child("user");
+            userRef.set({
+              "firstname": firstName,
+              "lastname": lastName,
+              "code": $scope.code,
+              "room": "G-5",
+              "time": 7
+            })
+
+            $scope.showCode = true;
+          }, function(err) {
+            console.log(err);
+          })
         }, function(err) {
           console.log(err);
         });
@@ -56,9 +86,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
       }, function(err) {
         // error
       });
-
-
-      $cordovaCamera.cleanup().then(); 
     });
   }
 })

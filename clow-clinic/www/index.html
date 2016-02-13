@@ -48,6 +48,17 @@
             Next
           </button></center>
         </div>
+
+        <div ng-show="showCode">
+          <div class="card">
+            <div class="item item-text-wrap">
+              <center><h2>{{firstName}},</h2><br><h3>Your number is</h3><br><h1>{{code}}</h1></center>
+            </div>
+            <center><button class="button button-positive" ng-click="">
+              Hand Device Back To Staff
+            </button></center>
+          </div>
+        </div>
       </ion-content>
     </ion-pane>
   </body>
