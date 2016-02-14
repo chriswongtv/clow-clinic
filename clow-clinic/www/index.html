@@ -53,20 +53,24 @@
           </button></center>
         </div>
 
-        <div ng-show="showCode">
+        <div class="show-code" ng-show="showCode">
           <div class="card">
             <div class="item item-text-wrap">
-              <center><h2>{{firstName}},</h2><br><h3>Your number is</h3><br><h1>{{code}}</h1></center>
+              <center><h2>{{firstName}},</h2><br><h3>Your number is</h3><h1>{{code}}</h1></center><br><br>
+              <center><button class="button button-positive" ng-click="backToStaff()">
+                Hand Device Back To Staff
+              </button></center>
             </div>
-            <center><button class="button button-positive" ng-click="backToStaff()">
-              Hand Device Back To Staff
-            </button></center>
           </div>
         </div>
 
         <div class="showIllness" ng-show="showIllness">
           <center><h2>Patient might have {{illness}}</h2></center>
-          <canvas id="bar" class="chart chart-bar" data="data" labels="labelList" series="series" options="{showTooltips: false}"></canvas>
+          <div class="card">
+            <div class="item item-text-wrap">
+              <canvas id="bar" class="chart chart-bar" data="data" labels="labelList" series="series" options="{showTooltips: false}"></canvas>
+            </div>
+          </div>
         </div>
       </ion-content>
     </ion-pane>

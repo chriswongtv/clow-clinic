@@ -23,14 +23,25 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'chart.js'])
   });
 })
 
-.controller('AppCtrl', function($scope, $cordovaCamera, $ionicPlatform, $http, $firebase) {
+.controller('AppCtrl', function($scope, $cordovaCamera, $ionicPlatform, $http, $firebase, $ionicLoading) {
   var firebaseRef = new Firebase("https://clow.firebaseio.com");
   $scope.code = Math.floor(Math.random() * 10000);
   $scope.showForm = true;
   $scope.showCode = false;
   $scope.showIllness = false;
 
+  $scope.showLoad = function() {
+    $ionicLoading.show({
+      template: 'Loading...'
+    });
+  };
+  $scope.hideLoad = function(){
+    $ionicLoading.hide();
+  };
+
   $scope.submitForm = function(firstName, lastName) {
+    $scope.showLoad();
+    $scope.firstName = firstName;
     $ionicPlatform.ready(function() {
       var options = {
         destinationType: Camera.DestinationType.DATA_URL,
@@ -119,6 +130,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'chart.js'])
               "time": 7
             })
 
+            $scope.hideLoad();
             $scope.showCode = true;
           }, function(err) {
             console.log(err);

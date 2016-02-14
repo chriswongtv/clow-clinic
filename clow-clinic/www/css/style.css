@@ -9,7 +9,15 @@ body .scroll-content {
 
 .logo img {
   width: 50%;
+  padding-top: 20%;
+}
+
+.show-code {
   padding-top: 10%;
+}
+
+.show-code h2 {
+  color: black;
 }
 
 body h2 {
