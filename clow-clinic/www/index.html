@@ -54,10 +54,14 @@
             <div class="item item-text-wrap">
               <center><h2>{{firstName}},</h2><br><h3>Your number is</h3><br><h1>{{code}}</h1></center>
             </div>
-            <center><button class="button button-positive" ng-click="">
+            <center><button class="button button-positive" ng-click="backToStaff()">
               Hand Device Back To Staff
             </button></center>
           </div>
+        </div>
+
+        <div ng-show="showIllness">
+          
         </div>
       </ion-content>
     </ion-pane>

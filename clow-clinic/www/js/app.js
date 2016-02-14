@@ -28,6 +28,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
   $scope.code = Math.floor(Math.random() * 10000);
   $scope.showForm = true;
   $scope.showCode = false;
+  $scope.showIllness = false;
 
   $scope.submitForm = function(firstName, lastName) {
     $ionicPlatform.ready(function() {
@@ -63,9 +64,21 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
 
           $http(config).then(function(res) {
             $scope.showForm = false;
+
+            $scope.anger = res.data[0].scores.anger;
+            $scope.contempt = res.data[0].scores.contempt;
+            $scope.disgust = res.data[0].scores.disgust;
+            $scope.fear = res.data[0].scores.fear;
+            $scope.happiness = res.data[0].scores.happiness;
+            $scope.neutral = res.data[0].scores.neutral;
+            $scope.sadness = res.data[0].scores.sadness;
+            $scope.surprise = res.data[0].scores.surprise;
+
             $scope.firstName = firstName;
             $scope.lastName = lastName;
+
             console.log(res);
+
             var userRef = firebaseRef.child("user");
             userRef.set({
               "firstname": firstName,
@@ -87,5 +100,66 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
         // error
       });
     });
+  }
+
+  $scope.backToStaff = function() {
+    $scope.showCode = false;
+
+    var options = {
+      "method": "POST",
+      "url": "https://europewest.services.azureml.net/workspaces/3646ada8ed934009af6f6b3bfd47c5cb/services/57eeebd63acd4d34b6a88034f79123ec/execute?api-version=2.0&details=true",
+      "headers": {
+        "Authorization": "Bearer o+MRy+YMpZvCD90puFu3k8/jc33NVNkLMqB+yZa2Z1RI7i2MU6R9yYIzmtb13vOVpzpWnsWOj0tkQuO6Qt2WRw==",
+        "Content-Type": "application/json"
+      },
+      "data": {
+        "Inputs": {
+          "input1": {
+            "ColumnNames": [
+              "Illness",
+              "Anger",
+              "Contempt",
+              "Disgust",
+              "Fear",
+              "Happiness",
+              "Neutral",
+              "Sadness",
+              "Surprise"
+            ],
+            "Values": [
+              [
+                "value",
+                $scope.anger,
+                $scope.contempt,
+                $scope.disgust,
+                $scope.fear,
+                $scope.happiness,
+                $scope.neutral,
+                $scope.sadness,
+                $scope.surprise
+              ],
+              [
+                "value",
+                $scope.anger,
+                $scope.contempt,
+                $scope.disgust,
+                $scope.fear,
+                $scope.happiness,
+                $scope.neutral,
+                $scope.sadness,
+                $scope.surprise
+              ]
+            ]
+          }
+        },
+        "GlobalParameters": {}
+      }
+    };
+
+    $http(options).then(function(res) {
+      console.log(res);
+    })
+
+    $scope.showIllness = true;
   }
 })
