@@ -195,7 +195,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'chart.js'])
 
     $http(options).then(function(res) {
       console.log(res);
-      $scope.illness = "Patient might have " + res.data.Results.output1.value.Values[0][9];
+      $scope.illness = "Patient might have " + (res.data.Results.output1.value.Values[0][9]).toLowerCase();
     })
 
     $scope.showIllness = true;
