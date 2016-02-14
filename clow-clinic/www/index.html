@@ -65,12 +65,15 @@
         </div>
 
         <div class="showIllness" ng-show="showIllness">
-          <center><h2>Patient might have {{illness}}</h2></center>
+          <center><h2>{{illness}}</h2></center>
           <div class="card">
             <div class="item item-text-wrap">
               <canvas id="bar" class="chart chart-bar" data="data" labels="labelList" series="series" options="{showTooltips: false}"></canvas>
             </div>
           </div>
+          <center><button class="button button-positive" ng-click="startOver()">
+            Start Over
+          </button></center>
         </div>
       </ion-content>
     </ion-pane>
