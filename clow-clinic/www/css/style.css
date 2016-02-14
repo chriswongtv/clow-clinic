@@ -1,1 +1,25 @@
-/* Empty. Add your own CSS if you like */
+body .scroll-content {
+	background-color: #F45849;
+	background-size: cover;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  width: 50%;
+  padding-top: 10%;
+}
+
+body h2 {
+  color: white;
+}
+
+.showIllness {
+  margin-top: 10%;
+}
+
+.add {
+	margin: 7em;
+}

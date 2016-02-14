@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
+angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'chart.js'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -65,6 +65,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
           $http(config).then(function(res) {
             $scope.showForm = false;
 
+            console.log(res);
+
             $scope.anger = res.data[0].scores.anger;
             $scope.contempt = res.data[0].scores.contempt;
             $scope.disgust = res.data[0].scores.disgust;
@@ -74,10 +76,39 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
             $scope.sadness = res.data[0].scores.sadness;
             $scope.surprise = res.data[0].scores.surprise;
 
+            $scope.emotionList = [];
+
+            // $scope.emotionList.push({ "name": "Anger", "val": $scope.anger });
+            // $scope.emotionList.push({ "name": "Contempt", "val": $scope.contempt });
+            // $scope.emotionList.push({ "name": "Disgust", "val": $scope.disgust });
+            // $scope.emotionList.push({ "name": "Fear", "val": $scope.fear });
+            // $scope.emotionList.push({ "name": "Happiness", "val": $scope.happiness });
+            // $scope.emotionList.push({ "name": "Neutral", "val": $scope.neutral });
+            // $scope.emotionList.push({ "name": "Sadness", "val": $scope.sadness });
+            // $scope.emotionList.push({ "name": "Surprise", "val": $scope.surprise });
+
+            $scope.emotionList.push(parseFloat($scope.anger));
+            $scope.emotionList.push(parseFloat($scope.contempt));
+            $scope.emotionList.push(parseFloat($scope.disgust));
+            $scope.emotionList.push(parseFloat($scope.fear));
+            $scope.emotionList.push(parseFloat($scope.happiness));
+            $scope.emotionList.push(parseFloat($scope.neutral));
+            $scope.emotionList.push(parseFloat($scope.sadness));
+            $scope.emotionList.push(parseFloat($scope.surprise));
+
+            console.log($scope.emotionList);
+
+            // $scope.series = ['Emotion'];
+
+            $scope.labelList = ['Anger', 'Contempt', 'Disgust', 'Fear', 'Happiness', 'Neutral', 'Sadness', 'Surprise'];
+
+            $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+            $scope.series = ['Series A'];
+            $scope.data = [];
+            $scope.data.push($scope.emotionList);
+
             $scope.firstName = firstName;
             $scope.lastName = lastName;
-
-            console.log(res);
 
             var userRef = firebaseRef.child("user");
             userRef.set({
@@ -158,6 +189,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase'])
 
     $http(options).then(function(res) {
       console.log(res);
+      $scope.illness = res.data.Results.output1.value.Values[0][9];
     })
 
     $scope.showIllness = true;
